@@ -1,58 +1,56 @@
-# Contributing to LiveKit Flutter Video Call
+# 为 LiveKit Flutter 视频通话项目做出贡献
 
-We welcome contributions to the LiveKit Flutter Video Call project! This document provides guidelines and instructions for contributing.
+感谢你对 LiveKit Flutter 视频通话项目的关注！本文档提供贡献的指南与流程说明。
 
-## Code of Conduct
+## 行为准则
 
-- Be respectful and inclusive
-- Avoid harassment or discrimination
-- Welcome diverse perspectives
-- Focus on the code, not the person
+- 保持尊重与包容
+- 避免任何形式的骚扰或歧视
+- 欢迎多元观点
+- 聚焦于问题与代码，而非个人
 
-## Getting Started
+## 入门流程
 
-### 1. Fork and Clone
+### 1. Fork 并克隆仓库
 
 ```bash
-# Fork on GitHub, then clone your fork
+# 在 GitHub 上 Fork，然后克隆你的 Fork
 git clone https://github.com/your-username/livekit-flutter-video-call.git
 cd livekit-flutter-video-call
 
-# Add upstream remote
+# 添加上游仓库
 git remote add upstream https://github.com/original-repo/livekit-flutter-video-call.git
 ```
 
-### 2. Create Feature Branch
+### 2. 创建功能分支
 
 ```bash
-# Update main branch
+# 同步主分支
 git fetch upstream
 git checkout main
 git merge upstream/main
 
-# Create feature branch
+# 创建功能分支
 git checkout -b feature/your-feature-name
 ```
 
-### 3. Setup Development Environment
+### 3. 搭建开发环境
 
-Follow [SETUP_GUIDE.md](./SETUP_GUIDE.md) for detailed instructions.
+参照 [SETUP_GUIDE.md](./SETUP_GUIDE.md) 了解详细步骤。
 
 ```bash
 flutter pub get
 flutter analyze
 ```
 
-## Development Guidelines
+## 开发规范
 
-### Code Style
+### 代码风格
 
-#### Dart/Flutter Style Guide
+#### Dart/Flutter 风格约定
 
 ```dart
-// Follow these conventions:
-
-// 1. File names: snake_case.dart
+// 1. 文件名使用蛇形命名：snake_case.dart
 class MyWidget extends StatefulWidget {
   const MyWidget({Key? key}) : super(key: key);
 
@@ -60,39 +58,39 @@ class MyWidget extends StatefulWidget {
   State<MyWidget> createState() => _MyWidgetState();
 }
 
-// 2. Classes: PascalCase
+// 2. 类名使用 PascalCase
 class _MyWidgetState extends State<MyWidget> {
-  // 3. Variables/Methods: camelCase
+  // 3. 变量 / 方法使用 camelCase
   String myVariable = '';
   
   void myMethod() {
-    // 4. Constants: camelCase (prefer lowerCase)
+    // 4. 常量：优先使用小写 camelCase
     const myConstant = 'value';
   }
 }
 
-// 5. Always use const constructors
+// 5. 能使用 const 构造函数时请务必使用
 const SizedBox(height: 16)
 
-// 6. Use trailing commas in multi-line lists
+// 6. 多行列表、参数等使用尾随逗号
 Widget build(BuildContext context) {
   return Column(
     children: [
       Text('Item 1'),
-      Text('Item 2'),  // trailing comma
+      Text('Item 2'),
     ],
   );
 }
 ```
 
-### File Organization
+### 文件组织结构
 
 ```dart
-// 1. Imports (organized groups)
+// 1. 导入顺序（按组划分）
 import 'package:flutter/material.dart';
 import 'package:livekit_client/livekit_client.dart';
 
-// 2. Class definition
+// 2. Widget 定义
 class MyWidget extends StatefulWidget {
   const MyWidget({Key? key}) : super(key: key);
 
@@ -100,78 +98,73 @@ class MyWidget extends StatefulWidget {
   State<MyWidget> createState() => _MyWidgetState();
 }
 
-// 3. State class
+// 3. State 定义
 class _MyWidgetState extends State<MyWidget> {
-  // Variables
   String _myVar = '';
   
-  // Lifecycle methods
   @override
   void initState() {
     super.initState();
-    // initialization
+    // 初始化逻辑
   }
   
-  // Build method
   @override
   Widget build(BuildContext context) {
     return const SizedBox();
   }
   
-  // Helper methods (private)
   void _myHelperMethod() {}
   
-  // Dispose
   @override
   void dispose() {
-    // cleanup
+    // 资源清理
     super.dispose();
   }
 }
 ```
 
-### Comments
+### 注释规范
 
-Use comments wisely:
+合理使用注释：
 
 ```dart
-// ✓ Good: Explains why, not what
-// Use ListView instead of Column for scrolling performance
+// ✓ 说明“为什么”如此设计
+// 使用 ListView 替代 Column，避免滚动性能问题
 final list = ListView(children: items);
 
-// ✗ Bad: Explains what the code does (obvious)
-// Create a ListView widget
+// ✗ 避免描述显而易见的“做了什么”
+// 创建一个 ListView 组件
 final list = ListView(children: items);
 
-// ✓ Good: Doc comments for public APIs
-/// Connects to a LiveKit room with the provided credentials.
-/// 
-/// Throws [ConnectionException] if connection fails.
+// ✓ 为公共 API 编写文档注释
+/// 使用指定凭据连接 LiveKit 房间。
+///
+/// 抛出 [ConnectionException] 以指示连接失败。
 Future<void> connect(String url, String token) async {
-  // implementation
+  // 实现细节
 }
 
-// ✗ Bad: Unnecessary comments
-// Set name to value
+// ✗ 不必要的注释
+// 将 name 设置为 'John'
 name = 'John';
 ```
 
-### Error Handling
+### 错误处理
 
 ```dart
-// ✓ Good: Specific error handling
+// ✓ 明确区分不同错误
 try {
   await _service.connect(url, token);
 } on ConnectionException catch (e) {
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('Connection failed: ${e.message}')),
+    SnackBar(content: Text('连接失败：${e.message}')),
   );
 } catch (e) {
   FirebaseCrashlytics.instance.recordError(e, StackTrace.current);
   rethrow;
 }
 
-// ✗ Bad: Generic error handling
+// ✗ 不建议的泛型处理
 try {
   await _service.connect(url, token);
 } catch (e) {
@@ -179,12 +172,11 @@ try {
 }
 ```
 
-### Testing
+### 测试要求
 
-Write tests for new features:
+为新功能编写测试：
 
 ```dart
-// Unit test example
 void main() {
   group('LiveKitService', () {
     late LiveKitService service;
@@ -193,64 +185,61 @@ void main() {
       service = LiveKitService();
     });
 
-    test('should initialize without errors', () {
+    test('初始化不应抛出异常', () {
       expect(service, isNotNull);
     });
 
-    test('should connect to room', () async {
-      // arrange
+    test('可成功连接房间', () async {
       const url = 'wss://test.livekit.cloud';
       const token = 'test-token';
       const room = 'test-room';
 
-      // act
       await service.connect(url, token, room);
 
-      // assert
       expect(service.room, isNotNull);
     });
   });
 }
 ```
 
-## Commit Guidelines
+## 提交规范
 
-### Commit Message Format
+### 提交信息格式
 
-Follow conventional commits:
+遵循 Conventional Commits：
 
 ```
 type(scope): description
 
-body (optional)
+body (可选)
 
-footer (optional)
+footer (可选)
 ```
 
-### Types
+### 提交类型
 
-- **feat**: New feature
-- **fix**: Bug fix
-- **docs**: Documentation changes
-- **style**: Code style changes (formatting)
-- **refactor**: Code refactoring
-- **perf**: Performance improvements
-- **test**: Adding or updating tests
-- **chore**: Build or dependency updates
+- **feat**：新增功能
+- **fix**：缺陷修复
+- **docs**：文档更新
+- **style**：格式调整
+- **refactor**：重构
+- **perf**：性能优化
+- **test**：测试相关
+- **chore**：构建、依赖或杂项
 
-### Examples
+### 示例
 
 ```bash
-# New feature
+# 新功能
 git commit -m "feat(video): add camera toggle button"
 
-# Bug fix
+# Bug 修复
 git commit -m "fix(connection): handle network timeout properly"
 
-# Documentation
+# 文档更新
 git commit -m "docs(deployment): add iOS deployment steps"
 
-# Multiple lines
+# 多行提交
 git commit -m "feat(ui): improve participant grid layout
 
 - Adjust spacing between tiles
@@ -258,36 +247,36 @@ git commit -m "feat(ui): improve participant grid layout
 - Fix orientation handling"
 ```
 
-## Pull Request Process
+## Pull Request 流程
 
-### Before Submitting
+### 提交前检查
 
-1. **Ensure your code follows the style guide**
+1. **确保代码符合风格规范**
    ```bash
    dart format .
    flutter analyze
    ```
 
-2. **Run tests**
+2. **运行测试**
    ```bash
    flutter test
    ```
 
-3. **Update documentation**
-   - Update README.md if needed
-   - Add comments for complex code
-   - Update CHANGELOG if applicable
+3. **更新文档**
+   - 必要时更新 README.md
+   - 复杂逻辑添加注释
+   - 如有需要同步更新 CHANGELOG
 
-4. **Test on actual devices**
-   - Test on Android device/emulator
-   - Test on iOS simulator (if possible)
-   - Test on different Flutter versions
+4. **实际设备测试**
+   - Android 真机或模拟器
+   - iOS 模拟器（如可行）
+   - 不同 Flutter 版本（如适用）
 
-### PR Template
+### PR 模板
 
 ```markdown
 ## Description
-Brief description of changes
+简要描述改动
 
 ## Type of Change
 - [ ] Bug fix
@@ -301,7 +290,7 @@ Brief description of changes
 - [ ] All tests passing
 
 ## Screenshots (if applicable)
-Add screenshots for UI changes
+如有 UI 变化请附截图
 
 ## Checklist
 - [ ] Code follows style guidelines
@@ -310,33 +299,33 @@ Add screenshots for UI changes
 - [ ] No breaking changes introduced
 ```
 
-### Code Review Expectations
+### 代码评审期望
 
-- Respond to review comments promptly
-- Make requested changes on the same branch
-- Request re-review after changes
-- Be open to feedback and discussion
+- 及时响应评审意见
+- 在同一分支上完成修改
+- 完成后请求再次评审
+- 拥抱反馈并积极讨论
 
-## Reporting Issues
+## Issue 提交
 
-### Bug Reports
+### Bug 报告
 
-Include:
+请包含以下信息：
 
 ```
 ## Description
-Clear description of the bug
+问题描述
 
 ## Steps to Reproduce
-1. Step 1
-2. Step 2
-3. Step 3
+1. 步骤 1
+2. 步骤 2
+3. 步骤 3
 
 ## Expected Behavior
-What should happen
+期望行为
 
 ## Actual Behavior
-What actually happens
+实际行为
 
 ## Environment
 - Flutter version: X.X.X
@@ -344,92 +333,92 @@ What actually happens
 - App version: 1.0.0
 
 ## Logs
-Relevant error messages or logs
+相关错误日志
 ```
 
-### Feature Requests
+### 功能需求
 
-Include:
+请包含以下内容：
 
 ```
 ## Description
-Clear description of feature
+清晰描述希望新增的功能
 
 ## Use Case
-Why this feature is needed
+说明该功能的使用场景与价值
 
 ## Proposed Solution
-Your suggested implementation
+建议的实现思路
 
 ## Alternatives
-Other possible approaches
+可选方案或备选思路
 
 ## Additional Context
-Any other relevant information
+补充背景信息
 ```
 
-## Documentation
+## 文档维护
 
-### Updating Docs
+### 文档更新原则
 
-- Keep README.md up to date
-- Update DEPLOYMENT.md for build changes
-- Update SETUP_GUIDE.md for environment changes
-- Add examples for new features
+- 保持 README.md 与最新状态一致
+- 构建流程变化需更新 DEPLOYMENT.md
+- 环境配置变化更新 SETUP_GUIDE.md
+- 新功能补充示例或说明
 
-### Doc Comments
+### 代码注释模板
 
 ```dart
-/// Brief description of the class/method
+/// 简要说明类或方法的作用
 ///
-/// More detailed explanation if needed.
-/// Can span multiple lines.
+/// 如有必要可以补充详细说明。
+/// 可包含多行内容。
 ///
-/// Example:
+/// 示例：
 /// ```dart
 /// final token = await service.generateToken();
 /// ```
 ///
-/// Parameters:
-///   - param1: Description of param1
+/// 参数：
+///   - param1: 参数说明
 ///
-/// Returns:
-/// Description of return value
+/// 返回值：
+/// 返回内容描述
 ///
-/// Throws:
-///   - [SomeException]: When something goes wrong
+/// 可能抛出：
+///   - [SomeException]: 触发条件说明
 class MyClass {
 }
 ```
 
-## Review Process
+## 评审流程
 
-1. Submit pull request
-2. Automated checks run (linting, tests)
-3. Community members review code
-4. Address feedback
-5. Merge when approved
+1. 提交 Pull Request
+2. 自动化检查（Lint、测试）
+3. 社区成员进行代码评审
+4. 根据反馈进行修改
+5. 审核通过后合并
 
-## Recognition
+## 贡献者认可
 
-Contributors will be:
-- Added to CONTRIBUTORS.md
-- Mentioned in release notes
-- Recognized in project documentation
+我们将：
+- 在 CONTRIBUTORS.md 中感谢贡献者
+- 在发布说明中提及贡献
+- 在项目文档中对贡献者表示认可
 
-## Questions?
+## 有问题？
 
-- Check existing issues and PRs
-- Read documentation files
-- Open a discussion issue
-- Join LiveKit community
+- 查看现有 Issue 与 PR
+- 阅读仓库中的文档
+- 提交讨论性 Issue
+- 加入 LiveKit 社区
 
-## License
+## 许可证
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+提交代码即表示同意按 MIT License 授权发布贡献内容。
 
 ---
 
-Thank you for contributing! 🎉
+感谢你的贡献！🎉
 
-**Contributing Guide Last Updated**: 2024
+**贡献指南最后更新**：2024

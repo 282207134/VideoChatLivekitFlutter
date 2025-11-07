@@ -1,37 +1,42 @@
-# LiveKit Flutter Video Call - Optional Features
+# LiveKit Flutter 视频通话 - 可选功能指南
 
-This guide covers optional features and enhancements you can add to the application.
+本指南介绍可为应用新增的扩展能力与增强特性。
 
-## Table of Contents
+## 目录
 
-1. [Firebase Integration](#firebase-integration)
-2. [Analytics](#analytics)
-3. [Crash Reporting](#crash-reporting)
-4. [Push Notifications](#push-notifications)
-5. [Backend Server](#backend-server)
+1. [Firebase 集成](#firebase-集成)
+2. [数据分析](#数据分析)
+3. [崩溃上报](#崩溃上报)
+4. [推送通知](#推送通知)
+5. [后端服务](#后端服务)
+6. [高级功能](#高级功能)
+7. [安全最佳实践](#安全最佳实践)
+8. [性能优化](#性能优化)
+9. [测试](#测试)
+10. [下一步](#下一步)
 
 ---
 
-## Firebase Integration
+## Firebase 集成
 
-Firebase provides excellent tools for analytics, crash reporting, and remote configuration.
+Firebase 提供分析、崩溃上报与远程配置等工具。
 
-### 1. Setup Firebase Project
+### 1. 创建 Firebase 项目
 
-1. Visit [Firebase Console](https://console.firebase.google.com)
-2. Create new project
-3. Add Android app:
-   - Package name: `com.livekit.videocall`
-   - Download `google-services.json`
-   - Place in `android/app/`
-4. Add iOS app:
-   - Bundle ID: `com.livekit.videocall`
-   - Download `GoogleService-Info.plist`
-   - Add to `ios/Runner/`
+1. 访问 [Firebase Console](https://console.firebase.google.com)
+2. 创建新项目
+3. 添加 Android 应用：
+   - 包名：`com.livekit.videocall`
+   - 下载 `google-services.json`
+   - 放置于 `android/app/`
+4. 添加 iOS 应用：
+   - Bundle ID：`com.livekit.videocall`
+   - 下载 `GoogleService-Info.plist`
+   - 放置于 `ios/Runner/`
 
-### 2. Add Firebase Dependencies
+### 2. 添加 Firebase 依赖
 
-Update `pubspec.yaml`:
+更新 `pubspec.yaml`：
 
 ```yaml
 dependencies:
@@ -40,9 +45,9 @@ dependencies:
   firebase_crashlytics: ^3.3.0
 ```
 
-### 3. Initialize Firebase
+### 3. 初始化 Firebase
 
-Create `lib/firebase_options.dart`:
+创建 `lib/firebase_options.dart`：
 
 ```dart
 import 'package:firebase_core/firebase_core.dart';
@@ -61,11 +66,11 @@ void main() async {
 
 ---
 
-## Analytics
+## 数据分析
 
-Track user behavior and app usage.
+用于追踪用户行为与应用使用情况。
 
-### 1. Basic Analytics Events
+### 1. 基础事件上报
 
 ```dart
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -73,7 +78,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 class AnalyticsService {
   static final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
-  // Track room join
+  // 房间加入事件
   static Future<void> logRoomJoined(String roomName) async {
     await _analytics.logEvent(
       name: 'room_joined',
@@ -84,7 +89,7 @@ class AnalyticsService {
     );
   }
 
-  // Track call duration
+  // 通话时长
   static Future<void> logCallDuration(Duration duration) async {
     await _analytics.logEvent(
       name: 'call_ended',
@@ -94,7 +99,7 @@ class AnalyticsService {
     );
   }
 
-  // Track button clicks
+  // 按钮点击
   static Future<void> logButtonClick(String buttonName) async {
     await _analytics.logEvent(
       name: 'button_clicked',
@@ -106,13 +111,13 @@ class AnalyticsService {
 }
 ```
 
-### 2. Custom User Properties
+### 2. 自定义用户属性
 
 ```dart
-// Set user ID
+// 设置用户 ID
 await FirebaseAnalytics.instance.setUserId(id: 'user_123');
 
-// Set user properties
+// 设置用户属性
 await FirebaseAnalytics.instance.setUserProperty(
   name: 'device_type',
   value: 'mobile',
@@ -124,30 +129,30 @@ await FirebaseAnalytics.instance.setUserProperty(
 );
 ```
 
-### 3. View Analytics in Console
+### 3. 在控制台查看数据
 
-- Visit Firebase Console
-- Analytics > Events
-- Check real-time events
-- Review user demographics
-- Analyze user flow
+- 打开 Firebase Console
+- 进入 Analytics > Events
+- 查看实时事件
+- 分析用户画像
+- 观察用户路径
 
 ---
 
-## Crash Reporting
+## 崩溃上报
 
-Automatically track and report app crashes.
+自动收集并上报应用崩溃信息。
 
-### 1. Setup Crashlytics
+### 1. 配置 Crashlytics
 
-Update `pubspec.yaml`:
+更新 `pubspec.yaml`：
 
 ```yaml
 dependencies:
   firebase_crashlytics: ^3.3.0
 ```
 
-### 2. Initialize Crashlytics
+### 2. 初始化 Crashlytics
 
 ```dart
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -157,12 +162,12 @@ void main() async {
   
   await Firebase.initializeApp();
   
-  // Capture Flutter errors
+  // 捕获 Flutter 异常
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
   
-  // Capture async errors
+  // 捕获异步异常
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
@@ -172,10 +177,10 @@ void main() async {
 }
 ```
 
-### 3. Log Exceptions
+### 3. 记录异常
 
 ```dart
-// Catch and log exceptions
+// 捕获并记录异常
 try {
   await _liveKitService.connect(url, token, roomName);
 } catch (e, stackTrace) {
@@ -188,37 +193,38 @@ try {
 }
 ```
 
-### 4. Set Custom Keys
+### 4. 自定义关键字段
 
 ```dart
-// Add context to crashes
+// 为崩溃记录添加上下文
 FirebaseCrashlytics.instance.setCustomKey('room_name', roomName);
 FirebaseCrashlytics.instance.setCustomKey('user_id', userId);
 FirebaseCrashlytics.instance.setCustomKey('device_model', deviceModel);
 ```
 
-### 5. View Crashes in Console
+### 5. 在控制台查看崩溃
 
-- Visit Firebase Console
-- Crashlytics
-- Review recent crashes
-- Check stack traces
-- Identify patterns
+- 打开 Firebase Console
+- 进入 Crashlytics
+- 查看最新崩溃
+- 检查堆栈信息
+- 分析问题趋势
 
 ---
 
-## Push Notifications
+## 推送通知
 
-Send real-time notifications to users.
+向用户推送实时通知。
 
-### 1. Setup Firebase Cloud Messaging (FCM)
+### 1. 配置 Firebase Cloud Messaging (FCM)
 
 ```bash
-# Add to pubspec.yaml
-firebase_messaging: ^14.6.0
+# 在 pubspec.yaml 中添加
+dependencies:
+  firebase_messaging: ^14.6.0
 ```
 
-### 2. Request Permission
+### 2. 请求权限
 
 ```dart
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -244,46 +250,46 @@ Future<void> requestNotificationPermission() async {
 }
 ```
 
-### 3. Handle Messages
+### 3. 处理通知
 
 ```dart
-// Handle foreground messages
+// 前台消息
 FirebaseMessaging.onMessage.listen((RemoteMessage message) {
   print('Received message: ${message.notification?.title}');
-  // Show notification
+  // TODO: 显示通知
 });
 
-// Handle background messages
+// 后台消息
 FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) {
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message: ${message.messageId}');
 }
 ```
 
-### 4. Get FCM Token
+### 4. 获取 FCM Token
 
 ```dart
-// Get device token
+// 获取设备令牌
 final token = await FirebaseMessaging.instance.getToken();
 print('FCM Token: $token');
 
-// Send token to your backend
-// Your backend can use this to send notifications
+// 将令牌发送到后端
+// 后端可利用该令牌发送通知
 ```
 
 ---
 
-## Backend Server
+## 后端服务
 
-Create a backend server for token generation and room management.
+构建后端用于令牌生成与房间管理。
 
-### 1. Node.js Example
+### 1. Node.js 示例
 
 ```javascript
 // server.js
 const express = require('express');
-const { AccessToken } = require('livekit-server-sdk');
+const { AccessToken, RoomServiceClient } = require('livekit-server-sdk');
 const cors = require('cors');
 
 const app = express();
@@ -294,7 +300,7 @@ const apiKey = process.env.LIVEKIT_API_KEY;
 const apiSecret = process.env.LIVEKIT_API_SECRET;
 const liveKitUrl = process.env.LIVEKIT_URL;
 
-// Generate token endpoint
+// 令牌生成接口
 app.post('/api/token', (req, res) => {
   try {
     const { identity, roomName, metadata } = req.body;
@@ -329,7 +335,7 @@ app.post('/api/token', (req, res) => {
   }
 });
 
-// Room info endpoint
+// 房间信息接口
 app.get('/api/rooms/:roomName', async (req, res) => {
   try {
     const { roomName } = req.params;
@@ -357,7 +363,7 @@ app.listen(PORT, () => {
 });
 ```
 
-### 2. Python Example
+### 2. Python 示例
 
 ```python
 # server.py
@@ -407,7 +413,7 @@ if __name__ == '__main__':
     app.run(debug=True, port=3000)
 ```
 
-### 3. Update Flutter App to Use Backend
+### 3. Flutter 集成后端
 
 ```dart
 class LiveKitService {
@@ -420,7 +426,7 @@ class LiveKitService {
     String roomName,
   ) async {
     try {
-      // Get token from backend
+      // 从后端获取令牌
       final response = await http.post(
         Uri.parse('$backendUrl/api/token'),
         headers: {'Content-Type': 'application/json'},
@@ -438,7 +444,7 @@ class LiveKitService {
       final url = data['url'];
       final token = data['token'];
 
-      // Connect to LiveKit
+      // 连接 LiveKit
       await connect(url, token, roomName);
     } catch (e) {
       print('Error joining room: $e');
@@ -450,46 +456,46 @@ class LiveKitService {
 
 ---
 
-## Advanced Features
+## 高级功能
 
-### 1. Recording
+### 1. 录制
 
 ```dart
-// LiveKit will automatically record if configured
-// Check LiveKit Dashboard > Rooms > Recording
+// 如在 LiveKit 中启用录制，进入后台即可查看
+// LiveKit 控制台 > Rooms > Recording
 ```
 
-### 2. Transcription
+### 2. 转写
 
 ```dart
-// Enable in LiveKit configuration
-// Cloud console settings > Recording & Transcription
+// 在 LiveKit 配置中启用
+// 云控制台设置 > Recording & Transcription
 ```
 
-### 3. Room Management
+### 3. 房间管理
 
 ```dart
-// Check active rooms
+// 获取活跃房间
 final rooms = await roomService.listRooms();
 
-// Delete room
+// 删除房间
 await roomService.deleteRoom('room-name');
 
-// Get room info
+// 获取指定房间
 final info = await roomService.listRooms(['room-name']);
 ```
 
 ### 4. Webhooks
 
 ```javascript
-// Receive room events
+// 接收房间事件
 app.post('/webhook/livekit', (req, res) => {
   const event = req.body;
   
   console.log('Event:', event.event);
   console.log('Room:', event.room?.name);
   
-  // Handle events:
+  // 事件类型示例：
   // - participant_joined
   // - participant_left
   // - room_started
@@ -501,22 +507,22 @@ app.post('/webhook/livekit', (req, res) => {
 
 ---
 
-## Security Best Practices
+## 安全最佳实践
 
-1. **Never hardcode credentials** in the app
-2. **Use backend for token generation**
-3. **Implement rate limiting** on token endpoint
-4. **Validate JWT tokens** before allowing connections
-5. **Use HTTPS/WSS** in production
-6. **Implement CORS** properly on backend
-7. **Monitor token expiration** and refresh
-8. **Log security events** for audit trail
+1. **切勿在客户端硬编码凭据**
+2. **使用后端统一生成令牌**
+3. **为令牌接口设置速率限制**
+4. **在连接前验证 JWT 令牌有效性**
+5. **生产环境务必使用 HTTPS/WSS**
+6. **在后端正确配置 CORS**
+7. **监控令牌过期时间并及时刷新**
+8. **记录安全事件以备审计**
 
 ---
 
-## Performance Optimization
+## 性能优化
 
-### 1. Memory Management
+### 1. 内存管理
 
 ```dart
 @override
@@ -527,22 +533,22 @@ void dispose() {
 }
 ```
 
-### 2. Battery Optimization
+### 2. 电量优化
 
 ```dart
-// Reduce video resolution on battery saver
+// 在省电模式下降低视频分辨率
 if (Platform.isAndroid) {
   final batteryManager = BatteryManager();
   if (await batteryManager.isBatterySaverOn) {
-    // Use lower resolution
+    // TODO: 使用较低分辨率
   }
 }
 ```
 
-### 3. Network Optimization
+### 3. 网络优化
 
 ```dart
-// Use adaptive bitrate
+// 启用自适应码率
 RoomOptions(
   adaptiveStream: true,
   dynacast: true,
@@ -551,9 +557,9 @@ RoomOptions(
 
 ---
 
-## Testing
+## 测试
 
-### 1. Unit Testing
+### 1. 单元测试
 
 ```dart
 test('LiveKit service initialization', () async {
@@ -562,7 +568,7 @@ test('LiveKit service initialization', () async {
 });
 ```
 
-### 2. Integration Testing
+### 2. 集成测试
 
 ```dart
 testWidgets('Join room flow', (WidgetTester tester) async {
@@ -577,14 +583,14 @@ testWidgets('Join room flow', (WidgetTester tester) async {
 
 ---
 
-## Next Steps
+## 下一步
 
-1. Implement features as needed
-2. Monitor analytics and crashes
-3. Optimize based on real-world usage
-4. Gather user feedback
-5. Plan new features
+1. 按需选择并实现上述功能
+2. 持续监控分析与崩溃数据
+3. 根据真实使用情况优化体验
+4. 收集用户反馈
+5. 规划后续功能
 
 ---
 
-**Last Updated**: 2024
+**最后更新**：2024
