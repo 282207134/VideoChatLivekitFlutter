@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/app_config.dart';
+
 class RoomInputDialog extends StatefulWidget {
   final Function(String url, String token, String roomName) onJoinRoom;
 
@@ -21,7 +23,7 @@ class _RoomInputDialogState extends State<RoomInputDialog> {
   @override
   void initState() {
     super.initState();
-    _urlController = TextEditingController();
+    _urlController = TextEditingController(text: AppConfig.liveKitUrl);
     _tokenController = TextEditingController();
     _roomController = TextEditingController();
   }
@@ -65,6 +67,7 @@ class _RoomInputDialogState extends State<RoomInputDialog> {
               decoration: InputDecoration(
                 labelText: 'LiveKit Server URL',
                 hintText: 'ws://your-server.com',
+                helperText: '默认：${AppConfig.liveKitUrl}',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -78,6 +81,7 @@ class _RoomInputDialogState extends State<RoomInputDialog> {
               decoration: InputDecoration(
                 labelText: 'JWT Token',
                 hintText: 'eyJhbGc...',
+                helperText: '使用环境变量中的 API Key/Secret 生成房间令牌',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

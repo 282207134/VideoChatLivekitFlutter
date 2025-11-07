@@ -22,19 +22,26 @@ flutter pub get
 - 创建账号与项目
 - 记录 WebRTC URL、API Key、API Secret
 
-### 3. 生成令牌
+### 3. 配置环境变量
+```bash
+cp .env.example .env
+# 更新 LIVEKIT_URL/LIVEKIT_API_KEY/LIVEKIT_API_SECRET（如有需要）
+```
+> 也可直接使用示例文件中的默认 LiveKit Cloud 凭据。
+
+### 4. 生成令牌
 ```bash
 npm install livekit-server-sdk
 
 # 编写 generate_token.js，填入 API Key/Secret，运行后获取 JWT 令牌
 ```
 
-### 4. 运行应用
+### 5. 运行应用
 ```bash
-flutter run
+flutter run --dart-define-from-file=.env
 ```
 
-### 5. 使用应用
+### 6. 使用应用
 - 点击 “Join Room”
 - 输入服务器 URL、JWT 令牌、房间名称
 - 授予权限

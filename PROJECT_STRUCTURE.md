@@ -32,6 +32,8 @@ livekit-flutter-video-call/
 │   └── utils/                      # 工具函数
 │       ├── app_config.dart         # 应用配置常量
 │       └── permission_helper.dart  # 权限处理工具
+├── assets/                          # 静态资源目录（含占位文件）
+│   └── .gitkeep                     # 保持目录被跟踪
 ├── test/                           # 单元与 Widget 测试
 │   ├── services/
 │   │   └── livekit_service_test.dart
@@ -39,6 +41,7 @@ livekit-flutter-video-call/
 │       └── participant_widget_test.dart
 ├── build/                          # 构建产物（已在 .gitignore 中）
 ├── .git/                           # Git 仓库数据
+├── .env.example                    # LiveKit 环境变量示例文件
 ├── .gitignore                      # Git 忽略规则
 ├── pubspec.yaml                    # Flutter 依赖与配置
 ├── pubspec.lock                    # 锁定的依赖版本
@@ -135,6 +138,11 @@ livekit-flutter-video-call/
   - 麦克风权限请求
   - 权限状态检查
   - 跳转到系统设置
+
+### 环境配置文件
+
+- `.env.example`：提供 LiveKit Cloud 默认凭据，运行前可复制为 `.env` 并按需修改。
+- `.env`：本地环境变量文件（在 `.gitignore` 中），通过 `flutter run --dart-define-from-file=.env` 注入。
 
 ### Android 平台文件
 
