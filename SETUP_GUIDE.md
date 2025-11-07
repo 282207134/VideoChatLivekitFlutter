@@ -1,64 +1,64 @@
-# LiveKit Flutter Video Call - Development Setup Guide
+# LiveKit Flutter 视频通话 - 开发环境搭建指南
 
-This guide provides step-by-step instructions for setting up the development environment.
+本文档提供搭建开发环境的分步说明。
 
-## Prerequisites
+## 前置条件
 
-### System Requirements
+### 硬件与系统要求
 
-- **RAM**: 8 GB minimum (16 GB recommended)
-- **Storage**: 15 GB free space minimum
-- **OS**: macOS, Linux, or Windows
-- **Internet**: Stable connection for downloading SDKs
+- **内存**：至少 8 GB（推荐 16 GB）
+- **储存空间**：至少 15 GB 可用空间
+- **操作系统**：macOS、Linux 或 Windows
+- **网络**：稳定的互联网连接用于下载 SDK
 
-### Supported Operating Systems
+### 支持的操作系统
 
-- macOS 10.15+
-- Ubuntu 20.04+
-- Windows 10 or 11
+- macOS 10.15 及以上
+- Ubuntu 20.04 及以上
+- Windows 10 或 11
 
-## Step 1: Install Flutter
+## 步骤 1：安装 Flutter
 
 ### macOS
 
 ```bash
-# Using Homebrew (recommended)
+# 推荐使用 Homebrew
 brew install flutter
 
-# Or download manually from https://flutter.dev/docs/get-started/install/macos
+# 或从 https://flutter.dev/docs/get-started/install/macos 手动下载
 
-# Add Flutter to PATH
+# 添加 Flutter 到 PATH
 export PATH="$PATH:`pwd`/flutter/bin"
 ```
 
 ### Ubuntu/Linux
 
 ```bash
-# Install dependencies
+# 安装依赖
 sudo apt-get install git curl unzip xz-utils zip libglu1-mesa
 
-# Download Flutter
+# 下载 Flutter
 git clone https://github.com/flutter/flutter.git -b stable
 
-# Add to PATH
+# 添加到 PATH
 export PATH="$PATH:`pwd`/flutter/bin"
 ```
 
 ### Windows
 
 ```bash
-# Download from https://flutter.dev/docs/get-started/install/windows
-# Extract to C:\src\flutter
-# Add C:\src\flutter\bin to PATH environment variable
+# 从 https://flutter.dev/docs/get-started/install/windows 下载
+# 解压至 C:\src\flutter
+# 将 C:\src\flutter\bin 加入环境变量 PATH
 ```
 
-### Verify Installation
+### 验证安装
 
 ```bash
 flutter doctor -v
 ```
 
-Expected output:
+期望输出：
 ```
 [✓] Flutter (Channel stable, 3.10.0, on macOS, darwin-arm64)
 [✓] Android toolchain - develop for Android devices
@@ -68,167 +68,165 @@ Expected output:
 [✓] Connected device (1 available)
 ```
 
-## Step 2: Install IDE
+## 步骤 2：安装 IDE
 
-### Option A: Android Studio (Recommended)
+### 方案 A：Android Studio（推荐）
 
-1. Download from https://developer.android.com/studio
-2. Run installer and follow setup wizard
-3. Install Flutter and Dart plugins:
-   - Open Android Studio
+1. 访问 https://developer.android.com/studio 下载
+2. 按向导完成安装
+3. 安装 Flutter 与 Dart 插件：
+   - 打开 Android Studio
    - Settings → Plugins
-   - Search "Flutter" → Install
-   - Search "Dart" → Install
-4. Restart Android Studio
+   - 搜索 “Flutter” 并安装
+   - 搜索 “Dart” 并安装
+4. 重启 Android Studio
 
-### Option B: Visual Studio Code
+### 方案 B：Visual Studio Code
 
 ```bash
-# Install VS Code
-# macOS: brew install --cask visual-studio-code
-# Or download from https://code.visualstudio.com
+# 安装 VS Code
+# macOS：brew install --cask visual-studio-code
+# 或访问 https://code.visualstudio.com 下载
 
-# Install extensions
+# 安装扩展
 # - Flutter (id: Dart-Code.flutter)
 # - Dart (id: Dart-Code.dart-code)
 ```
 
-### Option C: IntelliJ IDEA
+### 方案 C：IntelliJ IDEA
 
-1. Download from https://www.jetbrains.com/idea/
-2. Install Flutter and Dart plugins from marketplace
-3. Configure Flutter SDK path
+1. 下载：https://www.jetbrains.com/idea/
+2. 在 Marketplace 中安装 Flutter 与 Dart 插件
+3. 配置 Flutter SDK 路径
 
-## Step 3: Clone Project
+## 步骤 3：克隆项目
 
 ```bash
-# Clone the repository
+# 克隆仓库
 git clone <repository-url>
 cd livekit-flutter-video-call
 
-# Verify on correct branch
-git checkout feat/livekit-flutter-video-call-deploy-docs
+# 确认位于指定分支
+git checkout docs-translate-zh-cn
 ```
 
-## Step 4: Install Dependencies
+## 步骤 4：安装依赖
 
 ```bash
-# Get all Dart packages
+# 获取 Dart 包
 flutter pub get
 
-# Resolve Android dependencies
+# 解决 Android 依赖
 cd android
 ./gradlew clean
 cd ..
 
-# Resolve iOS dependencies
+# 解决 iOS 依赖
 cd ios
 pod install --repo-update
 cd ..
 ```
 
-## Step 5: Android Setup
+## 步骤 5：Android 环境配置
 
-### Install Android SDK
+### 安装 Android SDK
 
-Using Android Studio:
-1. Open Android Studio
+通过 Android Studio：
+1. 打开 Android Studio
 2. Tools → SDK Manager
-3. Install:
-   - Android SDK 33+ (API level 33)
+3. 安装以下组件：
+   - Android SDK 33+（API 级别 33）
    - Build Tools 34+
    - SDK Platform-Tools
-   - Intel x86 Emulator Accelerator (HAXM) or KVM
+   - Intel x86 Emulator Accelerator (HAXM) 或 KVM
 
-### Create Android Emulator
+### 创建 Android 模拟器
 
 ```bash
-# List available emulators
+# 查看已存在的模拟器
 flutter emulators
 
-# Create new emulator
+# 创建新模拟器
 flutter emulators create --name "Pixel_4_API_33"
 
-# Launch emulator
+# 启动模拟器
 flutter emulators --launch "Pixel_4_API_33"
 
-# Or using Android Studio:
-# Tools → Device Manager → Create Device
+# 或在 Android Studio 中：Tools → Device Manager → Create Device
 ```
 
-### Android Virtual Device (AVD) Configuration
+### AVD 配置建议
 
-1. Open Android Studio
+1. 打开 Android Studio
 2. Tools → Device Manager
-3. Create Virtual Device
-4. Select device (Pixel 4 recommended)
-5. Select Android version (API 33+)
-6. Configure:
-   - RAM: 2048 MB
-   - VM Heap: 512 MB
-   - Internal Storage: 2 GB
-   - SD Card: 100 MB
+3. 创建虚拟设备
+4. 推荐选择 Pixel 4
+5. Android 版本：API 33+
+6. 参数建议：
+   - RAM：2048 MB
+   - VM Heap：512 MB
+   - 内部存储：2 GB
+   - SD 卡：100 MB
 
-## Step 6: iOS Setup (macOS Only)
+## 步骤 6：iOS 环境配置（仅限 macOS）
 
-### Install Xcode Command Line Tools
+### 安装 Xcode 命令行工具
 
 ```bash
 xcode-select --install
 ```
 
-### Install CocoaPods
+### 安装 CocoaPods
 
 ```bash
 sudo gem install cocoapods
 ```
 
-### Configure iOS Deployment
+### 配置 iOS 项目
 
 ```bash
-# Open iOS project in Xcode
+# 在 Xcode 中打开项目
 open ios/Runner.xcworkspace
 
-# Or configure via command line
-# In Xcode:
-# - Select Runner project
-# - Select Runner target
-# - Build Settings:
+# 或在 Xcode 中执行以下操作：
+# - 选择 Runner 工程
+# - 选择 Runner target
+# - Build Settings：
 #   - Minimum Deployments: 11.0
-#   - Development Team: Select your team
+#   - Development Team: 选择你的团队
 ```
 
-### Create iOS Simulator
+### 创建 iOS 模拟器
 
 ```bash
-# List available simulators
+# 查看可用设备
 xcrun xctrace list devices
 
-# Create simulator
+# 创建模拟器
 xcrun simctl create "iPhone 14" \
   "com.apple.CoreSimulator.SimDeviceType.iPhone-14" \
   "com.apple.CoreSimulator.SimRuntime.iOS-17-4"
 
-# Launch simulator
+# 启动模拟器
 xcrun simctl boot <device-uuid>
 open /Applications/Simulator.app
 ```
 
-## Step 7: LiveKit Setup
+## 步骤 7：配置 LiveKit
 
-### Get LiveKit Cloud Account
+### 获取 LiveKit Cloud 账号
 
-1. Visit https://cloud.livekit.io
-2. Sign up for free account
-3. Create new project
-4. Copy credentials:
+1. 访问 https://cloud.livekit.io
+2. 注册免费账号
+3. 创建新项目
+4. 获取以下信息：
    - API Key
    - API Secret
-   - WebRTC URL (e.g., `wss://your-project.livekit.cloud`)
+   - WebRTC URL（例如 `wss://your-project.livekit.cloud`）
 
-### Generate Test Token
+### 生成测试令牌
 
-Create `scripts/generate_token.js`:
+创建 `scripts/generate_token.js`：
 
 ```javascript
 const { AccessToken } = require("livekit-server-sdk");
@@ -250,141 +248,141 @@ at.addGrant({
 console.log(at.toJwt());
 ```
 
-Run:
+运行：
 
 ```bash
 npm install livekit-server-sdk
 node scripts/generate_token.js
 ```
 
-## Step 8: Configure Environment
+## 步骤 8：配置环境变量
 
-### Create .env File (Optional)
+### 可选：创建 .env 文件
 
 ```bash
-# .env (git ignored)
+# .env（已在 .gitignore 中）
 LIVEKIT_URL=wss://your-project.livekit.cloud
 LIVEKIT_API_KEY=your_api_key
 LIVEKIT_API_SECRET=your_api_secret
 ```
 
-### Update Configuration
+### 更新应用配置
 
-Edit `lib/utils/app_config.dart`:
+编辑 `lib/utils/app_config.dart`：
 
 ```dart
 class AppConfig {
   static const String defaultLiveKitUrl = 'wss://your-project.livekit.cloud';
-  // ... other config
+  // 其他配置
 }
 ```
 
-## Step 9: Run the App
+## 步骤 9：运行应用
 
-### First Run
+### 首次运行
 
 ```bash
-# Ensure emulator/device is running
+# 确保设备或模拟器已就绪
 flutter devices
 
-# Run app
+# 启动应用
 flutter run
 ```
 
-### Debug Mode
+### 调试模式
 
 ```bash
-# Run in debug mode with verbose output
+# 使用详细日志运行
 flutter run -v
 
-# Debug with DevTools
+# 启动 DevTools
 flutter run --devtools
 ```
 
-### Release Mode
+### 发布模式
 
 ```bash
-# Build and run release version
+# 构建并运行发布版本
 flutter run --release
 ```
 
-## Step 10: Testing
+## 步骤 10：执行测试
 
-### Unit Tests
+### 单元测试
 
 ```bash
-# Run all unit tests
+# 运行所有单元测试
 flutter test
 
-# Run specific test file
+# 运行指定测试文件
 flutter test test/services/livekit_service_test.dart
 
-# Run with coverage
+# 生成覆盖率
 flutter test --coverage
 ```
 
-### Widget Tests
+### Widget 测试
 
 ```bash
-# Run widget tests
+# 运行 widget 测试
 flutter test test/widgets/
 ```
 
-### Integration Tests
+### 集成测试
 
 ```bash
-# Run integration tests
+# 运行集成测试
 flutter drive --target=test_driver/app.dart
 ```
 
-## Step 11: Code Quality
+## 步骤 11：代码质量
 
-### Formatting
+### 代码格式化
 
 ```bash
-# Format all Dart files
+# 格式化所有 Dart 文件
 dart format .
 
-# Or using flutter
+# 或使用 flutter
 flutter format .
 ```
 
-### Linting
+### Lint 检查
 
 ```bash
-# Analyze code
+# 静态分析
 flutter analyze
 
-# Fix issues automatically
+# 自动修复
 dart fix --apply
 ```
 
-### Type Checking
+### 类型检查
 
 ```bash
-# Check types
+# 运行类型分析
 dart analyze
 ```
 
-## Troubleshooting
+## 故障排查
 
-### Flutter Doctor Issues
+### Flutter Doctor 问题
 
 ```bash
-# Get detailed diagnosis
+# 获取详细信息
 flutter doctor -v
 
-# Accept licenses
+# 接受许可协议
 flutter doctor --android-licenses
 
-# Download SDK
+# 预下载 SDK
 flutter precache
 ```
 
-### Gradle Build Issues
+### Gradle 构建问题
 
 ```bash
-# Clean gradle cache
+# 清理 Gradle 缓存
 cd android
 ./gradlew clean
 ./gradlew --stop
@@ -393,10 +391,10 @@ flutter clean
 flutter pub get
 ```
 
-### Pod Installation Issues
+### Pod 安装问题
 
 ```bash
-# Clean pods
+# 清理 Pods
 cd ios
 rm -rf Pods
 rm -rf Podfile.lock
@@ -404,20 +402,20 @@ pod install --repo-update
 cd ..
 ```
 
-### Emulator Issues
+### 模拟器问题
 
 ```bash
-# Restart emulator
+# 重启模拟器
 flutter clean
 adb kill-server
 adb start-server
 flutter run
 ```
 
-### iOS Build Issues
+### iOS 构建问题
 
 ```bash
-# Clean build
+# 清理并重新安装依赖
 flutter clean
 cd ios
 rm -rf Pods DerivedData
@@ -427,11 +425,11 @@ flutter pub get
 flutter run
 ```
 
-## IDE Configuration
+## IDE 配置建议
 
-### VS Code Extensions
+### VS Code 扩展
 
-Recommended extensions in `.vscode/extensions.json`:
+在 `.vscode/extensions.json` 中推荐以下扩展：
 
 ```json
 {
@@ -444,9 +442,9 @@ Recommended extensions in `.vscode/extensions.json`:
 }
 ```
 
-### VS Code Settings
+### VS Code 设置
 
-Create `.vscode/settings.json`:
+创建 `.vscode/settings.json`：
 
 ```json
 {
@@ -463,44 +461,43 @@ Create `.vscode/settings.json`:
 }
 ```
 
-### Android Studio Configuration
+### Android Studio 设置
 
-Recommended settings:
-- Editor → Code Style → Dart: Enable "Format code on save"
-- Plugins: Install Flutter and Dart plugins
-- Languages & Frameworks → Dart: Set Dart SDK path
+推荐配置：
+- Editor → Code Style → Dart：开启“保存时格式化”
+- 插件：安装 Flutter 与 Dart
+- Languages & Frameworks → Dart：设置 Dart SDK 路径
 
-## Development Workflow
+## 开发流程
 
-### Daily Development
+### 日常开发
 
 ```bash
-# Start development
-1. Launch emulator/connect device: `flutter devices`
-2. Start hot reload: `flutter run`
-3. Make code changes
-4. Press 'r' to hot reload
-5. Press 'R' to hot restart
-6. Test changes
+1. 启动模拟器或连接设备：flutter devices
+2. 启动热重载：flutter run
+3. 修改代码
+4. 按 'r' 进行热重载
+5. 按 'R' 进行热重启
+6. 测试变更
 ```
 
-### Version Control
+### 版本控制
 
 ```bash
-# Create feature branch
+# 创建功能分支
 git checkout -b feature/my-feature
 
-# Make changes and commit
+# 修改并提交
 git add .
 git commit -m "feat: add my feature"
 
-# Push to repository
+# 推送到远端
 git push origin feature/my-feature
 
-# Create pull request on GitHub
+# 在 GitHub 上创建 Pull Request
 ```
 
-### Building for Release
+### 发布构建
 
 ```bash
 # Android
@@ -511,79 +508,79 @@ flutter build appbundle --release
 flutter build ios --release
 ```
 
-## Performance Profiling
+## 性能分析
 
-### Enable Performance Monitoring
+### 启用性能监控
 
 ```bash
-# Run with profiling
+# 以性能模式运行
 flutter run --profile
 
-# Or use DevTools
+# 或启用 DevTools
 flutter pub global activate devtools
 devtools
 ```
 
-### Analyze Performance
+### 分析性能
 
-In DevTools:
-1. Open Performance view
-2. Record timeline
-3. Perform actions
-4. Analyze frame rate and CPU usage
+在 DevTools 中：
+1. 打开 Performance 视图
+2. 开始记录时间轴
+3. 在应用中执行操作
+4. 分析帧率与 CPU 使用情况
 
-## Debugging
+## 调试技巧
 
-### Print Debugging
+### 打印调试
 
 ```dart
 print('Debug: $variable');
 debugPrint('Debug output');
 ```
 
-### Debugger
+### 调试器
 
 ```bash
-# Run with debugger
+# 启动调试
 flutter run
 
-# Set breakpoints in IDE
-# Press 'd' to detach, 'q' to quit
+# 在 IDE 中设置断点
+# 终端快捷键：'d' 分离调试，'q' 退出
 ```
 
-### Hot Reload/Restart
+### 热重载 / 热重启
 
 ```bash
-# During flutter run:
-# 'r' - hot reload (fast, preserves state)
-# 'R' - hot restart (full restart)
-# 'p' - toggle performance overlay
-# 'o' - toggle orientation
-# 'q' - quit
+# 在 flutter run 期间可用：
+# 'r' - 热重载（快速，保留状态）
+# 'R' - 热重启（完全重启）
+# 'p' - 切换性能叠层
+# 'o' - 切换横竖屏
+# 'q' - 退出
 ```
 
-## Next Steps
+## 下一步
 
-1. Read [README.md](./README.md) for app overview
-2. Review [DEPLOYMENT.md](./DEPLOYMENT.md) for deployment
-3. Check [pubspec.yaml](./pubspec.yaml) for dependencies
-4. Explore [lib/](./lib) directory structure
+1. 阅读 [README.md](./README.md) 了解应用概览
+2. 查阅 [DEPLOYMENT.md](./DEPLOYMENT.md) 准备部署
+3. 查看 [pubspec.yaml](./pubspec.yaml) 确认依赖
+4. 探索 [lib/](./lib) 目录结构
 
-## Additional Resources
+## 额外资源
 
-- **Flutter Setup**: https://flutter.dev/docs/get-started/install
-- **Dart Language**: https://dart.dev/guides
-- **LiveKit Docs**: https://docs.livekit.io
-- **Android Studio**: https://developer.android.com/studio
-- **Xcode**: https://developer.apple.com/xcode
+- **Flutter 安装指南**：https://flutter.dev/docs/get-started/install
+- **Dart 语言**：https://dart.dev/guides
+- **LiveKit 文档**：https://docs.livekit.io
+- **Android Studio**：https://developer.android.com/studio
+- **Xcode**：https://developer.apple.com/xcode
 
-## Getting Help
+## 获取帮助
 
-1. Check Flutter docs: https://flutter.dev/docs
-2. Search Stack Overflow with tags: `flutter` + `livekit`
-3. Open GitHub issues: https://github.com/livekit/client-sdk-flutter/issues
-4. Join Flutter Discord: https://discord.gg/N7Yshp27x5
+1. 查阅 Flutter 文档：https://flutter.dev/docs
+2. 在 Stack Overflow 使用 `flutter` 和 `livekit` 标签搜索
+3. 在 GitHub 提交 Issue：https://github.com/livekit/client-sdk-flutter/issues
+4. 加入 Flutter Discord：https://discord.gg/N7Yshp27x5
 
 ---
 
-**Last Updated**: 2024
+**最后更新**：2024
