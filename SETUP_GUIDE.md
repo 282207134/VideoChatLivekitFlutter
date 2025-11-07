@@ -257,25 +257,27 @@ node scripts/generate_token.js
 
 ## 步骤 8：配置环境变量
 
-### 可选：创建 .env 文件
+### 8.1 复制示例文件
 
 ```bash
-# .env（已在 .gitignore 中）
-LIVEKIT_URL=wss://your-project.livekit.cloud
-LIVEKIT_API_KEY=your_api_key
-LIVEKIT_API_SECRET=your_api_secret
+cp .env.example .env
+# 根据环境修改 LIVEKIT_URL/LIVEKIT_API_KEY/LIVEKIT_API_SECRET
 ```
 
-### 更新应用配置
+> `.env.example` 中已经预置了可直接使用的 LiveKit Cloud 凭据，未创建 `.env` 时应用会自动回退到这些默认值。
 
-编辑 `lib/utils/app_config.dart`：
+### 8.2 通过 Dart Define 注入
 
-```dart
-class AppConfig {
-  static const String defaultLiveKitUrl = 'wss://your-project.livekit.cloud';
-  // 其他配置
-}
+```bash
+flutter run --dart-define-from-file=.env
+# 或者在构建时：flutter build apk --dart-define-from-file=.env
 ```
+
+> `flutter run` / `flutter build` 支持多个 `--dart-define` 参数，必要时可以覆盖单个键值。
+
+### 8.3 更新应用配置
+
+`lib/utils/app_config.dart` 会自动从 `LIVEKIT_URL`、`LIVEKIT_API_KEY` 与 `LIVEKIT_API_SECRET` 读取值，未定义时回退到仓库内置默认配置。
 
 ## 步骤 9：运行应用
 

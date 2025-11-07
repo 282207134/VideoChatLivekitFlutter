@@ -31,7 +31,8 @@
 ✅ 基于 Stream 的响应式更新  
 ✅ 资源释放与清理  
 ✅ 错误处理与用户反馈  
-✅ 支持横屏与竖屏
+✅ 支持横屏与竖屏  
+✅ 通过 Dart Define 配置 LiveKit URL 与凭据
 
 ### 2. 平台配置
 
@@ -136,7 +137,8 @@
 
 - **pubspec.yaml** - Flutter 项目清单与依赖  
 - **analysis_options.yaml** - Dart 静态分析规则  
-- **.gitignore** - Git 忽略规则
+- **.gitignore** - Git 忽略规则  
+- **.env.example** - LiveKit 环境变量示例（可复制为 `.env` 使用）
 
 ## 📊 项目统计
 
@@ -188,10 +190,11 @@
 ## 🚀 快速开始
 
 1. **搭建环境**：参考 SETUP_GUIDE.md
-2. **获取 LiveKit 凭据**：访问 cloud.livekit.io
-3. **运行应用**：执行 `flutter run`
-4. **加入房间**：填写 LiveKit URL、JWT 令牌与房间名称
-5. **开始通话**：授权权限即可体验
+2. **获取 LiveKit 凭据**：访问 cloud.livekit.io（或使用仓库提供的示例值）
+3. **配置环境变量**：`cp .env.example .env` 并按需更新
+4. **运行应用**：`flutter run --dart-define-from-file=.env`
+5. **加入房间**：填写 LiveKit URL、JWT 令牌与房间名称
+6. **开始通话**：授权权限即可体验
 
 ## 📚 不同角色的阅读建议
 

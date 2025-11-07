@@ -39,21 +39,28 @@ cd livekit-flutter-video-call
 flutter pub get
 ```
 
-3. **运行应用**
+3. **配置环境变量**
+```bash
+cp .env.example .env
+# 然后根据需要更新 LIVEKIT_URL/LIVEKIT_API_KEY/LIVEKIT_API_SECRET
+```
+> 未提供自定义 `.env` 时，应用会使用内置的 LiveKit Cloud 默认值。
+
+4. **运行应用**
 
 Android 设备：
 ```bash
-flutter run -d android
+flutter run -d android --dart-define-from-file=.env
 ```
 
 iOS 设备：
 ```bash
-flutter run -d ios
+flutter run -d ios --dart-define-from-file=.env
 ```
 
 任意已连接设备：
 ```bash
-flutter run
+flutter run --dart-define-from-file=.env
 ```
 
 ## 📱 应用结构
@@ -93,6 +100,8 @@ ios/                          # iOS 平台代码
 3. 创建新项目
 4. 复制 WebRTC URL（示例：`wss://your-project.livekit.cloud`）
 5. 获取 API Key 与 Secret
+
+> 当前仓库提供的 `.env.example` 已预置 `wss://dome-qtf8hjw3.livekit.cloud`、API Key 与 Secret，可直接用于测试。
 
 #### 方案 B：自建 LiveKit 服务
 
@@ -195,6 +204,7 @@ flutter build apk --debug
 # 生成 iOS 模拟器构建
 flutter build ios --debug --simulator
 ```
+> 如需复用环境变量，可附加 `--dart-define-from-file=.env`。
 
 #### 正式构建
 
@@ -208,6 +218,7 @@ flutter build appbundle --release
 # 生成 iOS 正式包
 flutter build ios --release
 ```
+> 构建发布版本时同样可以追加 `--dart-define-from-file=.env` 覆盖运行时配置。
 
 ## 📋 部署指南
 
@@ -256,7 +267,8 @@ flutter build ios --release
 2. **HTTPS/WSS**：生产环境必须使用 `wss://`
 3. **令牌过期时间**：合理设置令牌有效期
 4. **API 密钥**：在后端安全存储 API Key
-5. **权限**：仅请求必要的系统权限
+5. **默认凭据**：仓库中的示例凭据仅供本地测试，生产环境务必使用你自己的密钥
+6. **权限**：仅请求必要的系统权限
 
 ## 🐛 故障排查
 

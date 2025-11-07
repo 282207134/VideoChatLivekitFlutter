@@ -166,6 +166,14 @@
 - IDE 相关文件
 - 操作系统临时文件
 
+#### [.env.example](./.env.example)
+**作用**：LiveKit 环境变量示例
+
+内容包含：
+- LiveKit WebSocket URL
+- API Key 与 Secret 示例值
+- 可复制为 `.env` 进行本地覆盖
+
 ---
 
 ## 📖 按角色阅读建议
