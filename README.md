@@ -1,16 +1,38 @@
-# video_chat_livekit_flutter
+# LiveKit Flutter Video Chat
 
-A new Flutter project.
+A simple Flutter video chat application using LiveKit.
 
-## Getting Started
+## Quick Start
 
-This project is a starting point for a Flutter application.
+1. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+2. Run the app:
+   ```bash
+   flutter run
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Configuration
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The app uses built-in configuration for demo purposes. For production, update the values in `lib/config/livekit_config.dart`:
+
+```dart
+class LiveKitConfig {
+  static const String url = 'wss://your-livekit-server.com';
+  static const String apiKey = 'your-api-key';
+  static const String apiSecret = 'your-api-secret';
+}
+```
+
+## Features
+
+- Video chat with multiple participants
+- Camera and microphone controls
+- Real-time participant management
+
+## Requirements
+
+- Flutter SDK >=3.0.0
+- LiveKit server

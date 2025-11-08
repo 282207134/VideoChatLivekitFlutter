@@ -79,46 +79,19 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('LiveKit 视频聊天'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
+      body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'LiveKit 配置信息',
+                '加入房间',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 24),
-              _buildConfigCard(
-                'WebSocket URL',
-                LiveKitConfig.url,
-                Icons.link,
-              ),
-              const SizedBox(height: 16),
-              _buildConfigCard(
-                'API Key',
-                LiveKitConfig.apiKey,
-                Icons.key,
-              ),
-              const SizedBox(height: 16),
-              _buildConfigCard(
-                'API Secret',
-                '${LiveKitConfig.apiSecret.substring(0, 10)}...',
-                Icons.lock,
-              ),
-              const SizedBox(height: 32),
-              const Text(
-                '加入房间',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
               TextField(
                 controller: _roomNameController,
                 decoration: const InputDecoration(
@@ -155,42 +128,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildConfigCard(String title, String value, IconData icon) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Icon(icon, color: Theme.of(context).colorScheme.primary),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    value,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );
