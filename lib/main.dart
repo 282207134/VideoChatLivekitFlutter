@@ -80,57 +80,55 @@ class _HomePageState extends State<HomePage> {
         title: const Text('LiveKit 视频聊天'),
       ),
       body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                '加入房间',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '加入房间',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 24),
-              TextField(
-                controller: _roomNameController,
-                decoration: const InputDecoration(
-                  labelText: '房间名称',
-                  hintText: '输入房间名称',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.meeting_room),
-                ),
+            ),
+            const SizedBox(height: 24),
+            TextField(
+              controller: _roomNameController,
+              decoration: const InputDecoration(
+                labelText: '房间名称',
+                hintText: '输入房间名称',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.meeting_room),
               ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _participantNameController,
-                decoration: const InputDecoration(
-                  labelText: '参与者名称',
-                  hintText: '输入您的名称',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
-                ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _participantNameController,
+              decoration: const InputDecoration(
+                labelText: '参与者名称',
+                hintText: '输入您的名称',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.person),
               ),
-              const SizedBox(height: 32),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: _startVideoChat,
-                  icon: const Icon(Icons.video_call),
-                  label: const Text('开始视频聊天'),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 32,
-                      vertical: 16,
-                    ),
+            ),
+            const SizedBox(height: 32),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: _startVideoChat,
+                icon: const Icon(Icons.video_call),
+                label: const Text('开始视频聊天'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
