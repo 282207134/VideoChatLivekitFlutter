@@ -10,7 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
   livekit_client: ^2.0.0
-  flutter_dotenv: ^5.1.0
   crypto: ^3.0.3
 
 dev_dependencies:
